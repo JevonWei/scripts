@@ -1,0 +1,53 @@
+#!/usr/local/easyops/python/bin/python
+# -*- coding: utf-8 -*- 
+
+# hosts文件增加hostname解析
+
+''' 
+用于将字符串格式的Host list转换为列表格式
+ip_input:为输入需要在hosts文件中添加的所有记录的主机IP
+ip_list:为输出的主机ip列表
+'''
+def host_list(ip_input):
+  ip_list = []
+  for n in ip_input.split():
+    ip_list.append(n)
+  return ip_list
+
+'''
+将输出主机列表中的所有host添加到hosts文件中解析
+host_ip:输入的主机ip列表
+filepath:定义写入的文件路径
+first_name:为hostname的前缀
+last_name:为hostname的后缀，整数类型
+'''
+def add_hosts(host_ip,f_name,l_name):
+  filepath = '/etc/hosts'
+  for i in host_ip:
+    with open(filepath,'a') as file_object:
+      file_object.write(str(i) + " " + f_name + str(l_name) + '\n')
+      file_object.close()
+    l_name += 1
+    content = 'ip=%s&output=ok'%i
+    PutRow ("table",content)
+    
+'''
+将host_ip的输出传递给add_hosts
+'''    
+#host_list(IP)
+add_hosts(host_list(IP),first_name,last_name)
+
+
+
+#filepath = '/etc/hosts'
+#ip_list = []
+#list = IP.split()
+#for n in list:
+#  ip_list.append(n)
+
+#for i in ip_list:
+#  with open(filepath,'a') as file_object:
+#    file_object.write(str(i) + " " + first_name + str(last_name) + '\n')
+#    file_object.close()
+#  PutRow ("table","ip=i&output=ok")
+#  last_name += 1  
